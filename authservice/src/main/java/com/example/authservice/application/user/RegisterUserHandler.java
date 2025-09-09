@@ -1,10 +1,11 @@
 package com.example.authservice.application.user;
 
+import com.example.authservice.application.port.PasswordHasher;
 import com.example.authservice.domain.user.User;
 import com.example.authservice.domain.user.UserRepository;
 import com.example.authservice.domain.user.vo.Email;
 import com.example.authservice.domain.user.vo.RoleType;
-import com.example.authservice.interfaces.rest.dto.UserResponse;
+import com.example.authservice.interfaces.rest.dto.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,17 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class RegisterUserHandler {
     private final UserRepository userRepository;
+    private final PasswordHasher passwordHasher;
 
-    public UserResponse handle(String name, String email, String password) {
-        Email emailObj = Email.of(email);
-        if (userRepository.existsByEmail(email)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+    public UserResponse handle(String name, String emailRaw, String passwordRaw) {
+        Email email = Email.of(emailRaw);
+
+        if (userRepository.existsByEmail(email.getValue())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email já cadastrado");
         }
 
-        User user = new User(name, emailObj, RoleType.CUSTOMER, password);
-
+        String hashedPassword = passwordHasher.hash(passwordRaw);
+        User user = new User(name, email, RoleType.CUSTOMER, hashedPassword);
         User savedUser = userRepository.save(user);
 
         return new UserResponse(

@@ -1,30 +1,22 @@
 package com.example.authservice.domain.user;
 
-import java.util.UUID;
-
+import com.example.authservice.domain.user.vo.Email;
 import com.example.authservice.domain.user.vo.Role;
 import com.example.authservice.domain.user.vo.RoleType;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import com.example.authservice.domain.user.vo.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Table(name = "usuario")
 @Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 public class User {
-    
     @Id
     @Column(nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,31 +28,17 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Embedded
     @Valid
+    @Embedded
     private Email email;
 
     @Embedded
     private Role role;
 
-    public User(String name, Email email, RoleType role, String pw) {
+    public User(String name, @Valid Email email, RoleType role, String password) {
         this.name = name;
         this.email = email;
         this.role = Role.of(role);
-        this.password = pw;
-    }
-
-    public void promoteTo(RoleType role) {
-        if (role.getLevel() > this.role.getValue().getLevel()) {
-            this.role = Role.of(role);
-        }
-    }
-
-    public boolean canAccess(RoleType role) {
-        return this.role.covers(role);
-    }
-
-    public void changePassword(String password) {
         this.password = password;
     }
 }

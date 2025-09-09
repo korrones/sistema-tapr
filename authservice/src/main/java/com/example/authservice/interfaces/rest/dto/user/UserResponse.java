@@ -1,4 +1,4 @@
-package com.example.authservice.interfaces.rest.dto;
+package com.example.authservice.interfaces.rest.dto.user;
 
 import java.util.UUID;
 
