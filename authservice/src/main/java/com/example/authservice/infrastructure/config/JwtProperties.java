@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Getter
 public class JwtProperties {
     private String secret;
-    private String issuer = "authservice";
-    private String audience = "deliveryapp";
+    private String issuer = "auth-service";
+    private String audience = "pizza app";
     private long accessTtlSeconds = 900;
-    private long refreshTtlSeconds = 2_592_000;
+    private long refresTtlSeconds = 2_592_000;
 }

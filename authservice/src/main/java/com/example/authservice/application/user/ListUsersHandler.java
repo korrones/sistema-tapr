@@ -1,7 +1,6 @@
 package com.example.authservice.application.user;
 
 import com.example.authservice.domain.user.User;
-import com.example.authservice.domain.user.vo.Email;
 import com.example.authservice.domain.user.UserRepository;
 import com.example.authservice.interfaces.rest.dto.user.UserResponse;
 import org.springframework.data.domain.Page;
