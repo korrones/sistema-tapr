@@ -13,7 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
+import com.example.authservice.domain.user.vo.Email;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -3,9 +3,11 @@ package com.example.authservice.domain.user.vo;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Embeddable
+@NoArgsConstructor
 public class Email {
 
     @jakarta.validation.constraints.Email(message = "Email invalido")
