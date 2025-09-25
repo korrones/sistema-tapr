@@ -23,8 +23,6 @@ public class RefreshTokenHandler {
             throw new RuntimeException("Refresh token inválido ou expirado");
         }
         RefreshToken refreshToken = optToken.get();
-        // Gera novo token de acesso
-    // Aqui, você deve buscar o usuário pelo ID. Exemplo simplificado:
     com.example.authservice.domain.user.User user = new com.example.authservice.domain.user.User();
     user.setId(refreshToken.getUserId());
     TokenService.TokenPair tokenPair = tokenService.issue(user);
